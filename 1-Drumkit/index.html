@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>buttonskit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="keys">
+        <div class="buttons">
+            <div class="key" data-key="81"><kbd>Q</kbd>
+                <span>clap</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="key" data-key="87"><kbd>W</kbd>
+                <span>hihat</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="key" data-key="69"><kbd>E</kbd>
+                <span>kick</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="key" data-key="65"><kbd>A</kbd>
+                <span>opehat</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="key" data-key="83"><kbd>S</kbd>
+            <span>boom</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="key" data-key="68"><kbd>D</kbd>
+            <span>ride</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="key" data-key="90"><kbd>Z</kbd>
+            <span>snare</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="key" data-key="88"><kbd>X</kbd>
+            <span>tom</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="key" data-key="67"><kbd>C</kbd>
+            <span>tink</span>
+            </div>
+        </div>
+    </div>
+
+    <audio src="sounds/clap.wav" data-key="81"></audio>
+    <audio src="sounds/hihat.wav" data-key="87"></audio>
+    <audio src="sounds/kick.wav" data-key="69"></audio>
+    <audio src="sounds/openhat.wav" data-key="65"></audio>
+    <audio src="sounds/boom.wav" data-key="83"></audio>
+    <audio src="sounds/ride.wav" data-key="68"></audio>
+    <audio src="sounds/snare.wav" data-key="90"></audio>
+    <audio src="sounds/tom.wav" data-key="88"></audio>
+    <audio src="sounds/tink.wav" data-key="67"></audio>
+    <script>
+    function playSound(e){
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        if(!audio) return;
+        key.classList.add('playing');
+        audio.currentTime = 0;
+        audio.play();
+    }
+
+    function removeTransition(e){
+        if(e.propertyName !== 'transform') return;
+        this.classList.remove('playing');
+    }
+
+    const keys = document.querySelectorAll(".key");
+    keys.forEach(key => key.addEventListener('transitionend',removeTransition));
+    console.log(keys);
+
+
+    window.addEventListener("keydown",playSound);
+    </script>
+</body>
+</html>
