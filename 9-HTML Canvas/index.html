@@ -2,55 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HTML5 Canvas</title>
+  <title>Console Tricks!</title>
 </head>
 <body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-  const canvas = document.querySelector('#draw');
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  ctx.strokeStyle = 'red';
-  ctx.lineJoin = 'round'; 
-  ctx.lineCap = 'round'; 
 
-  let isDrawing = false;
-  let lastX = 0;
-  let lastY = 0;
-  let hue = 0;
-  let direction = true;
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
-  function draw (e){
-    if (!isDrawing)  return;
-    ctx.beginPath();
-    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo (e.layerX, e.layerY);
-    ctx.stroke();
-    console.log(e);
-    [lastX, lastY] =[e.layerX , e.layerY];
-    hue++;
-    if (hue > 360) {hue = 0};
-    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1){
-      direction = !direction;
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
     }
-    direction? ctx.lineWidth++ : ctx.lineWidth--;
-  }
-  canvas.addEventListener('mousedown', (e) => {
-    isDrawing = true;
-    [lastX, lastY] =[e.layerX , e.layerY];    
-    });
-  canvas.addEventListener('mousemove', draw);
-  canvas.addEventListener('mouseout', () => isDrawing = false);
-  canvas.addEventListener('mouseup', () => isDrawing = false);
-</script>
 
-<style>
-  html, body {
-    margin:0;
-  }
-</style>
-
+    // Regular
+  console.log("hello");
+    // Interpolated
+  console.log("hello I am %s String", '+po');
+    // Styled
+  console.log('%c I am some great text', 'font-size:20px; background:red');
+    // warning!
+  console.warn("NOOOO");
+    // Error :|
+  console.error("NOOOO");
+   // Info
+  console.info("Eres atractivo");
+    // Testing
+  console.assert(1===0, "Erroneo")
+    // clearing
+  console.clear();
+    // Viewing DOM Elements
+  console.dir(document.querySelector('p'));
+    // Grouping together
+  dogs.forEach(dog => {
+    console.groupCollapsed(`${dog.name}`);
+    console.log(`This is ${dog.name}`);
+    console.log(`${dog.name} is ${dog.age} years old`);
+    console.log(`${dog.name} is ${dog.age *7 } dog years old`);
+    console.groupEnd(`${dog.name}`);
+  });
+    // counting
+  console.count('Wes');
+  console.count('Wes');
+  console.count('Wes');
+  console.count('Wes');
+  console.count('Wes');
+  console.count('Wes');
+  console.count('Wes');
+    // timing
+  console.time('fetching data');
+  fetch('https://api.github.com/users/wesbos')
+  .then(data => data.json())
+  .then(data => {
+    console.timeEnd('fetching data');
+    console.log(data);
+  });
+  </script>
 </body>
 </html>
